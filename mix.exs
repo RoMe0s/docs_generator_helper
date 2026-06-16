@@ -23,11 +23,11 @@ defmodule DocsGeneratorHelper.MixProject do
     [
       {:open_api_spex, "~> 3.21"},
 
-      # test only deps
-      {:phoenix, "~> 1.7", only: [:test]},
-      {:bureaucrat, "~> 0.2.10", only: [:test]},
+      # deps for test helpers, should be without test only env to be compiled when used as a dependency
+      {:phoenix, "~> 1.7"},
+      {:bureaucrat, "~> 0.2.10"},
       {:schemata, github: "edenlabllc/schemata"},
-      {:jason, "~> 1.4", only: [:test]}
+      {:jason, "~> 1.4"}
     ]
   end
 end
