@@ -11,9 +11,9 @@ Remember web module name as #{web_module}
 ## Step 2. Choose the controller
 
 Run
-```
-MIX_ENV=test mix open_api_coverage #{router_module}
-```
+  ```
+  MIX_ENV=test mix open_api_coverage #{router_module}
+  ```
 Choose first entry from the result list
 Remember the method (e.g. GET, POST) as #{route_method}
 Remember the route path as #{route_path}
@@ -127,9 +127,9 @@ Remember it as a #{test_line}
 This example can not work for everyone, required flags are `MIX_ENV=test` and `BUREUCRAT_DOC=true`
 DB_HOST and DB_PORT can be different and can be skipped, discuss it with the dev
 
-```
-DB_HOST=localhost DB_PORT=42529 MIX_ENV=test BUREUCRAT_DOC=true mix test #{test_path}:#{test_line}
-```
+  ```
+  DB_HOST=localhost DB_PORT=42529 MIX_ENV=test BUREUCRAT_DOC=true mix test #{test_path}:#{test_line}
+  ```
 
 ## Step 9. Find response example:
 
