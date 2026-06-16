@@ -9,6 +9,7 @@ Needs human to check the output :(
 ```Elixir
 def deps do
   [
+    {:open_api_spex, "~> 3.21"},
     {:docs_generator_helper, github: "RoMe0s/docs_generator_helper"}
   ]
 end

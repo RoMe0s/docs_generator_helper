@@ -124,11 +124,8 @@ Remember it as a #{test_line}
 
 ## Step 8. Refresh examples:
 
-This example can not work for everyone, required flags are `MIX_ENV=test` and `BUREUCRAT_DOC=true`
-DB_HOST and DB_PORT can be different and can be skipped, discuss it with the dev
-
   ```
-  DB_HOST=localhost DB_PORT=42529 MIX_ENV=test BUREUCRAT_DOC=true mix test #{test_path}:#{test_line}
+  MIX_ENV=test BUREUCRAT_DOC=true mix test #{test_path}:#{test_line}
   ```
 
 ## Step 9. Find response example:
