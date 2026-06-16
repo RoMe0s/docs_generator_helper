@@ -9,7 +9,7 @@ Needs human to check the output :(
 ```elixir
 def deps do
   [
-    {:docs_generator_helper, "~> 0.1.0"}
+    {:docs_generator_helper, github: "RoMe0s/docs_generator_helper"}
   ]
 end
 ```
