@@ -6,7 +6,7 @@ Needs human to check the output :(
 
 ## Installation
 
-```elixir
+```Elixir
 def deps do
   [
     {:docs_generator_helper, github: "RoMe0s/docs_generator_helper"}
@@ -36,7 +36,7 @@ Schemata converter can be saved or even moved to schemata lib (it will force us 
 You have to add stub api spec file(it's default file, more details at open_api_spex lib doc page).
 Replace Til in module name and path with your module name, path for this - apps/til/lib/til_web/api_spec.ex.
 
-      ```elixir
+      ```Elixir
       defmodule TilWeb.ApiSpec do
         @moduledoc false
 
@@ -65,14 +65,14 @@ Replace Til in module name and path with your module name, path for this - apps/
 
 In your existing conn_case.ex you have to remove next lines:
 
-      ```elixir
+      ```Elixir
       import Phoenix.ConnTest
       ```
 
 Add new lines:
 
 
-      ```elixir
+      ```Elixir
       import Phoenix.ConnTest, only: :functions
       import Bureaucrat.Helpers
       import Bureaucrat.Macros, except: [get: 2, get: 3, post: 2, post: 3, put: 2, put: 3, patch: 2, patch: 3, delete: 2, delete: 3]
@@ -81,7 +81,7 @@ Add new lines:
 
 Also you have to build your basic conn in different way:
 
-      ```elixir
+      ```Elixir
       conn =
         Phoenix.ConnTest.build_conn()
         |> Plug.Conn.put_req_header("accept", "application/json")
@@ -91,7 +91,7 @@ Also you have to build your basic conn in different way:
       ```
 
 And add helper function for skipping open_api_spex request validation for cases when you want to test invalid input:
-      ```elixir
+      ```Elixir
       def skip_open_api_validate_request(conn),
         do: Plug.Conn.put_private(conn, :open_api_validate_request, false)
       ```
@@ -100,7 +100,7 @@ Now we have to enable additional plug for test env only:
 In apps/til/lib/til_web.ex find function `controller` and change it.
 
 From:
-      ```elixir
+      ```Elixir
       def controller do
         quote do
           use Phoenix.Controller, formats: [:json]
@@ -113,7 +113,7 @@ From:
       ```
 
 To:
-      ```elixir
+      ```Elixir
       def controller do
         test_env_plugs =
           if Mix.env() == :test do
