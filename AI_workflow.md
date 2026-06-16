@@ -25,12 +25,12 @@ Remember it as a #{request_schema_module_name}
 
 Run for `GET` request:
   ```
-  mix schemata.gen.spec --module #{request_schema_module_name} --name #{web_module}.#{schema in plural}.Schemas.#{action}Request --params
+  mix schemata.gen.spec --module #{request_schema_module_name} --name #{web_module}.#{schema in plural}.Schemas.Requests.#{action}Request --params
   ```
 
 Run for `POST/PATCH/PUT` request:
   ```
-  mix schemata.gen.spec --module #{request_schema_module_name} --name #{web_module}.#{schema in plural}.Schemas.#{action}Request
+  mix schemata.gen.spec --module #{request_schema_module_name} --name #{web_module}.#{schema in plural}.Schemas.Requests.#{action}Request
   ```
 
 ## Step 4. Update controller
@@ -59,9 +59,9 @@ For `GET` requests:
   # TODO: review AI-generated
   operation(#{action},
     summary: #{description},
-    parameters: #{web_module}.#{schema in plural}.Schemas.#{action}Request.parameters_schema(),
+    parameters: #{web_module}.#{schema in plural}.Schemas.Requests.#{action}Request.parameters_schema(),
     responses: %{
-      200 => {"#{response description}", "application/json", #{web_module}.#{Schema in plural}.Schemas.#{action}Response}
+      200 => {"#{response description}", "application/json", #{web_module}.#{Schema in plural}.Schemas.Responses.#{action}Response}
     }
   )
   ```
@@ -71,19 +71,19 @@ For `POST/PATCH/PUT` requests:
   # TODO: review AI-generated
   operation(#{action},
     summary: #{description},
-    request_body: {"Request params", "application/json", #{web_module}.#{schema in plural}.Schemas.#{action}Request},
+    request_body: {"Request params", "application/json", #{web_module}.#{schema in plural}.Schemas.Requests.#{action}Request},
     responses: %{
-      200 => {"#{response description}", "application/json", #{web_module}.#{Schema in plural}.Schemas.#{action}Response}
+      200 => {"#{response description}", "application/json", #{web_module}.#{Schema in plural}.Schemas.Responses.#{action}Response}
     }
   )
   ```
 
 ## Step 5. Generate stub response spec module:
 
-module_path - apps/missed_part/#{web_module}/schemas/#{Schema in plural}/#{action}_response.ex (of course, everything in lower case etc.)
+module_path - apps/*missed_part*/#{web_module}/schemas/#{Schema in plural}/responses/#{action}_response.ex (of course, everything in lower case etc.)
 
   ```Elixir
-  defmodule #{web_module}.#{Schema in plural}.Schemas.#{action}Response do
+  defmodule #{web_module}.#{Schema in plural}.Schemas.Responses.#{action}Response do
     @moduledoc false
 
     alias OpenApiSpex.Schema
@@ -168,7 +168,7 @@ If you cannot find the example, ask the developer about future steps or providin
 
 ## Step 10. Generate response
 
-Using example from file or from developer generate schema and place it into `#{web_module}.#{Schema in plural}.Schemas.#{action}Response` by adding to data.properties.
+Using example from file or from developer generate schema and place it into `#{web_module}.#{Schema in plural}.Schemas.Responses.#{action}Response` by adding to data.properties.
 Also, add additionalProperties: false for `data` object.
 
 ## Step 11. Deduplicate schemas
@@ -178,5 +178,10 @@ For example if there are `SomeModule.CreateRequest` and `SomeModule.CreateReques
 For the future part of the example we will use `Period` as duplicated module
 If there are such modules than try to find modules with same module name from different request schemas, skip response ones
 Than check if these modules are the same
-If that modules are the same - create common module file `common/requests/period.ex` with module name `Common.Requests.Period`
+If that modules are the same - create common module file `..common/requests/period.ex` with module name `#{web_module}.Schemas.Common.Requests.Period`
 Then update modules with duplicated description to use common module and delete duplicated ones
+
+Keep or add comment:
+  ```Elixir
+  # TODO: review AI-generated
+  ```

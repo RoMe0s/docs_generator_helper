@@ -80,7 +80,11 @@ defmodule Mix.Tasks.Schemata.Gen.Spec do
 
     source = """
     defmodule #{module_name} do
+      @moduledoc false
+
       alias OpenApiSpex.{Operation, Schema}
+
+      # TODO: review auto generated
 
       def parameters_schema do
         [
@@ -108,9 +112,13 @@ defmodule Mix.Tasks.Schemata.Gen.Spec do
   defp generate_schema_module(module_name, schema, prefix) do
     """
     defmodule #{module_name} do
+      @moduledoc false
+
       alias OpenApiSpex.Schema
 
       @behaviour OpenApiSpex.Schema
+
+      # TODO: review auto generated
 
       @impl OpenApiSpex.Schema
       def schema do
