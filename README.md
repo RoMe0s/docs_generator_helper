@@ -63,6 +63,19 @@ Replace Til in module name and path with your module name, path for this - apps/
   end
   ```
 
+In your existing test_helper.exs for this API app:
+
+Replace existing
+  ```Elixir
+  ExUnit.start()
+  ```
+
+With
+
+  ```Elixir
+  DocsGeneratorHelper.TestHelpers.start()
+  ```
+
 In your existing conn_case.ex you have to remove next lines:
 
   ```Elixir
@@ -117,7 +130,7 @@ To:
   def controller do
     test_env_plugs =
       if Mix.env() == :test do
-        quote do: plug(TilWeb.Plugs.OpenApiValidate)
+        quote do: plug(DocsGeneratorHelper.Plugs.OpenApiValidateRequest)
       end
 
     quote do

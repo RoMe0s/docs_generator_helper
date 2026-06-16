@@ -170,3 +170,13 @@ If you cannot find the example, ask the developer about future steps or providin
 
 Using example from file or from developer generate schema and place it into `#{web_module}.#{Schema in plural}.Schemas.#{action}Response` by adding to data.properties.
 Also, add additionalProperties: false for `data` object.
+
+## Step 11. Deduplicate schemas
+
+If #{route_method} is not `GET` then go over generated request schema modules and obtain last part module names except root module
+For example if there are `SomeModule.CreateRequest` and `SomeModule.CreateRequest.Period` then take only `Period`
+For the future part of the example we will use `Period` as duplicated module
+If there are such modules than try to find modules with same module name from different request schemas, skip response ones
+Than check if these modules are the same
+If that modules are the same - create common module file `common/requests/period.ex` with module name `Common.Requests.Period`
+Then update modules with duplicated description to use common module and delete duplicated ones

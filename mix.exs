@@ -26,7 +26,7 @@ defmodule DocsGeneratorHelper.MixProject do
       # test only deps
       {:phoenix, "~> 1.7", only: [:test]},
       {:bureaucrat, "~> 0.2.10", only: [:test]},
-      {:schemata, git: "https://github.com/edenlabllc/schemata.git", ref: "bd4852647f0d4859e8fb4cd73489c1befea80380", only: [:test]},
+      {:schemata, github: "edenlabllc/schemata"},
       {:jason, "~> 1.4", only: [:test]}
     ]
   end
