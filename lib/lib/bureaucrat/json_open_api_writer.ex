@@ -23,10 +23,15 @@ defmodule DocsGeneratorHelper.JsonOpenApiWriter do
   """
 
   def write(records, path) do
-    spec = %{}
-    # TilWeb.ApiSpec.spec()
-    # |> Jason.encode!()
-    # |> Jason.decode!()
+    module =
+      records
+      |> List.first(%{})
+      |> get_in([Access.key(:private, %{}), :bureaucrat_api_spec_module])
+
+    spec =
+      module.spec()
+      |> Jason.encode!()
+      |> Jason.decode!()
 
     updated = Enum.reduce(records, spec, &add_example(&2, &1))
 

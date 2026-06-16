@@ -100,6 +100,7 @@ Also you have to build your basic conn in different way:
     |> Plug.Conn.put_req_header("accept", "application/json")
     |> Plug.Conn.put_req_header("content-type", "application/json")
     |> OpenApiSpex.Plug.PutApiSpec.call(OpenApiSpex.Plug.PutApiSpec.init(module: TilWeb.ApiSpec)) # replace with your spec
+    |> Plug.Conn.put_private(:bureaucrat_api_spec_module, TilWeb.ApiSpec)
     |> Plug.Conn.put_private(:open_api_validate_request, true)
   ```
 
