@@ -114,9 +114,9 @@ defmodule Mix.Tasks.Schemata.Gen.Spec do
     defmodule #{module_name} do
       @moduledoc false
 
-      alias OpenApiSpex.Schema
-
       @behaviour OpenApiSpex.Schema
+
+      alias OpenApiSpex.Schema
 
       # TODO: review auto generated
 

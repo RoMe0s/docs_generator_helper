@@ -40,13 +40,13 @@ Replace Til in module name and path with your module name, path for this - apps/
   defmodule TilWeb.ApiSpec do
     @moduledoc false
 
-    alias OpenApiSpex.{Info, OpenApi, Paths, Server}
+    @behaviour OpenApiSpex.OpenApi
 
-    @behaviour OpenApi
+    alias OpenApiSpex.{Info, OpenApi, Paths, Server}
 
     @impl OpenApi
     def spec do
-      %OpenApi{
+      OpenApiSpex.resolve_schema_modules(%OpenApi{
         servers: [
           %Server{
             url: "https://yourapi.example.com"
@@ -57,8 +57,7 @@ Replace Til in module name and path with your module name, path for this - apps/
           version: "1.0"
         },
         paths: Paths.from_router(TilWeb.Router)
-      }
-      |> OpenApiSpex.resolve_schema_modules()
+      })
     end
   end
   ```
@@ -128,18 +127,14 @@ From:
 To:
   ```Elixir
   def controller do
-    test_env_plugs =
-      if Mix.env() == :test do
-        quote do: plug(DocsGeneratorHelper.Plugs.OpenApiValidateRequest)
-      end
-
     quote do
       use Phoenix.Controller, formats: [:json]
 
       import Plug.Conn
 
       unquote(verified_routes())
-      unquote(test_env_plugs)
+      # credo:disable-for-next-line Credo.Check.Warning.MixEnv
+      unquote(if Mix.env() == :test, do: quote(do: plug(DocsGeneratorHelper.Plugs.OpenApiValidateRequest)))
     end
   end
   ```

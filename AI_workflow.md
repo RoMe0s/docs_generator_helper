@@ -86,9 +86,9 @@ module_path - apps/*missed_part*/#{web_module}/schemas/#{Schema in plural}/respo
   defmodule #{web_module}.#{Schema in plural}.Schemas.Responses.#{action}Response do
     @moduledoc false
 
-    alias OpenApiSpex.Schema
-
     @behaviour OpenApiSpex.Schema
+
+    alias OpenApiSpex.Schema
 
     # TODO: review AI-generated
 
