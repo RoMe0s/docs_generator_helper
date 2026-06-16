@@ -24,9 +24,9 @@ defmodule DocsGeneratorHelper.JsonOpenApiWriter do
 
   def write(records, path) do
     spec = %{}
-      # TilWeb.ApiSpec.spec()
-      # |> Jason.encode!()
-      # |> Jason.decode!()
+    # TilWeb.ApiSpec.spec()
+    # |> Jason.encode!()
+    # |> Jason.decode!()
 
     updated = Enum.reduce(records, spec, &add_example(&2, &1))
 

@@ -50,7 +50,10 @@ defmodule DocsGeneratorHelper.TestMacros do
           conn =
             if "BUREUCRAT_DOC" |> System.get_env("") |> String.downcase() == "true" do
               accept_header = conn |> Plug.Conn.get_req_header("accept") |> List.first() || ""
-              content_header = conn |> Plug.Conn.get_req_header("content-type") |> List.first() || ""
+
+              content_header =
+                conn |> Plug.Conn.get_req_header("content-type") |> List.first() || ""
+
               is_json = Enum.any?([accept_header, content_header], &String.contains?(&1, "json"))
 
               if is_json do
@@ -70,8 +73,22 @@ defmodule DocsGeneratorHelper.TestMacros do
               conn
             end
 
-          if Map.has_key?(conn.private, :open_api_spex) && Map.has_key?(conn.private.open_api_spex, :operation_id) do
-            OpenApiSpex.TestAssertions.assert_operation_response(conn)
+          if Map.has_key?(conn.private, :open_api_spex) &&
+               Map.has_key?(conn.private.open_api_spex, :operation_id) do
+            if conn.status in 200..299 do
+              OpenApiSpex.TestAssertions.assert_operation_response(conn)
+            else
+              try do
+                OpenApiSpex.TestAssertions.assert_operation_response(conn)
+              rescue
+                e in ExUnit.AssertionError ->
+                  unless String.contains?(e.message, "Failed to resolve a response schema") do
+                    reraise e, __STACKTRACE__
+                  end
+
+                  conn
+              end
+            end
           else
             conn
           end

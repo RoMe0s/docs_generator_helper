@@ -18,7 +18,9 @@ defmodule Mix.Tasks.OpenApiCoverage do
       Phoenix.Router.routes(router)
       |> Enum.filter(&controller_route?/1)
       |> Enum.reject(&open_api_covered?/1)
-      |> Enum.uniq_by(fn %{plug: controller, plug_opts: action, path: path} -> {controller, action, path} end)
+      |> Enum.uniq_by(fn %{plug: controller, plug_opts: action, path: path} ->
+        {controller, action, path}
+      end)
 
     if missing == [] do
       Mix.shell().info("All routes have OpenAPI specs defined.")

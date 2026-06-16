@@ -71,7 +71,9 @@ defmodule Mix.Tasks.Schemata.Gen.Spec do
 
     entries =
       Enum.map_join(properties, ",\n", fn {name, definition} ->
-        schema = definition |> DocsGeneratorHelper.Schemata.OpenAPI.to_openapi() |> render_schema("")
+        schema =
+          definition |> DocsGeneratorHelper.Schemata.OpenAPI.to_openapi() |> render_schema("")
+
         req = name in required_fields
         ~s|Operation.parameter(:#{name}, :query, #{schema}, "#{name}", required: #{req})|
       end)
@@ -92,7 +94,11 @@ defmodule Mix.Tasks.Schemata.Gen.Spec do
   end
 
   defp generate_module(module_name, %OpenApiSpex.Reference{} = ref, prefix) do
-    generate_schema_module(module_name, %OpenApiSpex.Schema{title: module_name, allOf: [ref]}, prefix)
+    generate_schema_module(
+      module_name,
+      %OpenApiSpex.Schema{title: module_name, allOf: [ref]},
+      prefix
+    )
   end
 
   defp generate_module(module_name, %OpenApiSpex.Schema{} = schema, prefix) do

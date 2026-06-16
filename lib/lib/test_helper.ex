@@ -15,7 +15,7 @@ defmodule DocsGeneratorHelper.TestHelpers do
     Ecto.Adapters.SQL.Sandbox.mode(Core.Repo, :manual)
 
     ```
-  
+
   """
 
   def start(opts \\ []) do
