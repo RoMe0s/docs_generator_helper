@@ -33,6 +33,20 @@ Run for `POST/PATCH/PUT` request:
   mix schemata.gen.spec --module #{request_schema_module_name} --name #{web_module}.#{schema in plural}.Schemas.Requests.#{action}Request
   ```
 
+Place each generated module into its own file under:
+  apps/*app_path*/web/schemas/#{schema_in_plural_snake}/requests/#{action_snake}_request/#{module_name_snake}.ex
+
+If there is a signed_content field in the schema provided by developer, then ask about internal schema module as well and regenerate same command for internal schema.
+Paste internal schema into main schema using next format:
+
+  ```Elixir
+  signed_content: %Schema{
+    type: :string,
+    minLength: 1,
+    extensions: %{"x-content-schema" => InternalSchemaGeneratedModuleName}
+  }
+  ```
+
 ## Step 4. Update controller
 
 Definitions:
@@ -80,7 +94,9 @@ For `POST/PATCH/PUT` requests:
 
 ## Step 5. Generate stub response spec module:
 
-module_path - apps/*missed_part*/#{web_module}/schemas/#{Schema in plural}/responses/#{action}_response.ex (of course, everything in lower case etc.)
+module_path - apps/*app_path*/web/schemas/#{schema_in_plural_snake}/responses/#{action_snake}_response.ex
+
+The key rule: all schema files live under web/schemas/, never directly under web/ or its other subdirectories (controllers/, views/, etc.).
 
   ```Elixir
   defmodule #{web_module}.#{Schema in plural}.Schemas.Responses.#{action}Response do
@@ -166,7 +182,7 @@ If you cannot find the example, ask the developer about future steps or providin
 ## Step 10. Generate response
 
 Using example from file or from developer generate schema and place it into `#{web_module}.#{Schema in plural}.Schemas.Responses.#{action}Response` by adding to data.properties.
-Also, add additionalProperties: false for `data` object.
+Also, add additionalProperties: false for `data` object and other objects like `meta` etc, make schema strict.
 
 ## Step 11. Deduplicate schemas
 
